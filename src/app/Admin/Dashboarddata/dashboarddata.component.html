@@ -1,0 +1,177 @@
+<div class="midbody clearfix">
+    <br>
+    <h3>Dashboard</h3>
+    <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+    <div class="row dashboard-top mt-30">
+        <div class="col-sm-6 col-md-4 revenue-box">
+            <div class="dashboard-box revenubox" style="background-color: moccasin;">
+                <div class="clearfix">
+                    <div class="pull-left icon ">
+                        <br>
+                      <!-- <i class="fa fa-line-chart " style="background: #666;
+                      background: rgba(4, 195, 243, 0.96);
+                      border-radius: 100%;
+                      border: 6px solid #fff;
+                      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.46);
+                      color:white;
+                      display: table-cell;
+                      font-size: 45px;
+                      height: 1px;
+                      padding: 20px;
+                      text-align: center;
+                      transition: .5s;
+                      vertical-align: middle;
+                      width: 30px; ">
+                      
+                   </i> -->
+                   <!-- <i class="fa fa-line-chart"></i> -->
+
+                    <!-- <img src="assets/svg/increased-revenue.svg" alt="" /> -->
+                    
+                    <div class="icon-wrapper"><i class="fa fa-line-chart custom-icon1"></i></div>
+
+                    </div>
+                    <div style="  text-align: right;font-size:25px; color: #e91e77; ">
+                        Total Revenue
+                    </div>
+                    <div style=" text-align: right;font-size:50px;color:black; ">
+                        {{totalRevenue}}<span> &nbsp;$</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 revenue-box">
+            <div class="dashboard-box referalbox" style="background-color: moccasin;">
+                <div class="clearfix">
+                    <div class="pull-left icon" >
+                        <br>
+                   <!-- <i class="fa fa-users" style="background: #666;
+                   background: rgb(21, 117, 86);
+                   border-radius: 100%;
+                   border: 6px solid #fff;
+                   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.46);
+                   color:white;
+                   display: table-cell;
+                   font-size: 45px;
+                   height: 1px;
+                   padding: 20px;
+                   text-align: center;
+                   transition: .5s;
+                   vertical-align: middle;
+                   width: 30px; " >
+                      
+                   </i> -->
+                   <div class="icon-wrapper"><i class="fa fa-users custom-icon2"></i></div>
+                </div>
+                    <div style=" text-align: right;font-size:25px;color: #29abe2; ">
+                        Total Referrals
+                    </div>
+                    <div style="  text-align: right;font-size:50px; color: black; ">
+                        {{totalReferral}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 revenue-box">
+            <div class="dashboard-box referalbox" style="background-color: moccasin;">
+                <div class="clearfix">
+                    <div class="pull-left icon">
+                        <br>
+                        
+                   <!-- <i class="fa fa-user" style="background: #666;
+                   background: goldenrod;
+                   border-radius: 100%;
+                   border: 6px solid #fff;
+                   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.46);
+                   color:white;
+                   display: table-cell;
+                   font-size: 45px;
+                   height: 1px;
+                   padding: 20px;
+                   text-align: center;
+                   transition: .5s;
+                   vertical-align: middle;
+                   width: 95px;" >
+                      
+                   </i> -->
+                   <div class="icon-wrapper"><i class="fa fa-user custom-icon3"></i></div>
+                </div>
+                    <div style="  text-align: right;font-size:25px;color: #29abe2;">
+                        Pending Referrals
+                    </div>
+
+                    <div style=" text-align: right;font-size:50px;color: black; ">
+                        {{pendingReferrals}}
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+       
+    </div>
+   
+    <div class="row">
+        <div class="col-sm-12 col-md-8 dashboard-bx" >
+            <div class="dashboard-graph dashboard-box ">
+                <!-- <img src="assets/graph.jpg" alt=""> -->
+                <p-chart type="bar" [data]="Chartdata" ></p-chart>
+                <div class="text-center bold" style="color:black">Screenings</div>
+            </div>
+        </div>
+
+        
+        <!-- <div class="col-md-4 col-sm-12 dashboard-bx">
+        <div class="dashboard-audit ">
+            <div class="dashboard-audit-heading">
+                <h5>Audit Logs  </h5>
+            </div>
+            <div class="dashboard-audit-body">
+                <div class="clearfix">
+                   <div class="row">
+                       <div class="col-sm-2">
+                           <span class="audit-user"><img src="assets/agreement.png" alt="" /></span>
+                       </div>
+                       <div class="col-sm-10">
+                           <div class="audit-right">
+                               <h2>Agreement Name</h2>
+                               <p>Lorem Ipsum is simply dummy text of the printing </p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-2">
+                           <span class="audit-user"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
+                       </div>
+                       <div class="col-sm-10">
+                           <div class="audit-right">
+                               <h2>Agreement Name</h2>
+                               <p>Lorem Ipsum is simply dummy text of the printing </p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-2">
+                           <span class="audit-user"><i class="fa fa-user" aria-hidden="true"></i></span>
+                       </div>
+                       <div class="col-sm-10">
+                           <div class="audit-right">
+                               <h2>Agreement Name</h2>
+                               <p>Lorem Ipsum is simply dummy text of the printing </p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-sm-12">
+                           <span class="see-link"><a href="#">See all...</a></span>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    </div>
+</div>
+<div class="loader" *ngIf="IsLoaderActive"><img src="assets/loader.gif" /></div>

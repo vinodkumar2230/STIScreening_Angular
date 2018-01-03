@@ -1,0 +1,69 @@
+<div class="midbody clearfix">
+    <br>
+    <h3>Audit Logs</h3>
+<form [formGroup]="searchform" novalidate (ngSubmit)="filterData(searchform.value)">
+    <!-- <pre>{{searchform.value | json}}</pre> -->
+    <div class="row mt-30">
+        <div class="col-md-3">
+                <label class="control-label">Operation Type</label>
+                <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-asterisk"></i></div>
+                <select class="form-control" formControlName="operationType">
+                    <option value="-1">-- Operation Type --</option>
+                    <option value="0">Password Change</option>
+                    <option value="1">Report uploaded</option>
+                    <option value="2">Password Reset</option>
+                    <option value="3">New Referrals</option>
+                    <option value="4">New Payments</option>
+                </select>
+                </div>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Start Date</label>
+                    <div class="input-group">
+                            <input class="form-control" placeholder="YYYY-MM-DD" name="dp" formControlName="startDate"ngbDatepicker #start="ngbDatepicker">
+                               
+                            <label class="input-group-addon btn" for="startdate" (click)="start.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">End Date</label>
+                    <div class="input-group">
+                            <input class="form-control" placeholder="YYYY-MM-DD" name="dp" formControlName="endDate" ngbDatepicker #end="ngbDatepicker">
+                            <label class="input-group-addon btn" for="startdate" (click)="end.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="control-label" style="visibility: hidden">Gender</label>
+                <div class="form-actions right">
+                    <button type="submit" class="btn btn-primary">
+                        Search</button>
+
+                </div>
+            </div>
+    </div>
+    
+</form>
+<p-dataTable [value]="datatabledata" [totalRecords]="tabletotal" [rows]="tablerows" [paginator]="true" [lazy]="true" (onLazyLoad)="loadLazyScreeningData($event)"
+[rowsPerPageOptions]="[5,10,20,50,100]" [responsive]="true">
+<p-header><strong>ALL AUDIT LOGS</strong></p-header>
+<p-column field="userName" header="Name" sortable="true"></p-column>
+<p-column field="ScreenName" header="Screen" sortable="true"></p-column>
+<p-column field="Operation" header="Operation" sortable="true"></p-column>
+<p-column field="date" header="Date" sortable="true"></p-column>
+<p-footer *ngIf="tabletotal"><div class="row" >
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <label> <strong>Total Records:</strong></label> 
+    {{tabletotal }} 
+</div></p-footer>
+</p-dataTable>
+
+</div>

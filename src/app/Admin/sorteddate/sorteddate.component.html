@@ -1,0 +1,82 @@
+<div class="midbody clearfix">
+    <form [formGroup]="searchform" novalidate  (ngSubmit)="FilterData(searchform.value)">
+            <!-- <pre>{{searchform.value | json}}</pre> -->      
+            <div class="row mt-30">
+                
+               
+              
+              
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Start Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="startdp" ngbDatepicker #start="ngbDatepicker" formControlName="startDate">
+                            <label class="input-group-addon btn" for="startdate" (click)="start.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">End Date</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="enddp" ngbDatepicker #end="ngbDatepicker" formControlName="endDate">
+                            <label class="input-group-addon btn" for="enddate" (click)="end.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label" style="visibility:hidden">End Date</label>
+                    <div class="form-actions right">
+                        <button type="submit"  class="btn btn-primary">
+                            <i class="fa fa-search"></i>Search</button>
+                    </div>
+                </div>
+            </div>
+       
+    </form>
+    <p-dataTable [value]="datatabledata.ResponseData" [totalRecords]="tabletotal" [rows]="tablerows" [paginator]="true" [lazy]="true" (onLazyLoad)="loadLazyScreeningData($event)"
+        [rowsPerPageOptions]="[5,10,20]" *ngIf="datatabledata">
+        <p-header><strong>PATIENT ORDERED SCREENINGS</strong> </p-header>
+        <p-column field="name" header="Patient Name" sortable="true"></p-column>
+        <p-column field="amount" header="Amount ($)" sortable="true"></p-column>
+        <p-column field="Transactionstatus" header="TransactionStatus" sortable="true"></p-column>
+        <!-- <p-column field="DateOfBirth" header="DOB" sortable="true"></p-column>
+        <p-column field="StateName" header="State" sortable="true"></p-column>
+        <p-column field="CreatedDate" header="Created Date" sortable="true"></p-column>
+        <p-column field="IsReceiveSMS" header="Status"></p-column> -->
+        <p-column field="ScreeningID" header="">
+            <template let-col let-row="rowData" let-index="rowIndex"  pTemplate="body">
+                <!-- <button pButton (click)="ViewSTIForm(row.ScreeningID)" label="STI Form"></button> -->
+                <!-- <span *ngIf="!row.isEditable">{{row.EstimatedTime}}</span>
+               <span *ngIf="row.isEditable"><input type="text" [(ngModel)]="row.EstimatedTime"></span> -->
+             
+            </template>
+            
+           </p-column>
+           <p-footer *ngIf="totaldata"><div class="row" >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <label> <strong>Users:</strong></label> 
+        {{totaldata}}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+         
+       <label><strong>Total Amount:$</strong> </label>
+        <!-- {{totalamount}} -->
+       {{getTotal()}}.00
+    </div></p-footer>
+           
+    </p-dataTable>
+
+    <button type="submit" class="btn btn-success btn-sm  pull-right" (click)="ExportExcel()">
+        
+            Export as Excel</button>
+    
+
+
+</div>

@@ -1,0 +1,85 @@
+.form-wrap {
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.form-wrap:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    background: #222533;
+    width: 50%;
+}
+
+.form-wrap-left {
+    flex: 0 0 50%;
+    background: #222533;
+    color: #787c90;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    z-index: 9;
+    font-size: 18px;
+    line-height: 26px;
+    padding: 15px 30px;
+}
+
+.form-left-content {
+    text-align: center;
+    max-width: 367px;
+    margin: auto;
+}
+
+.form-left-content figure {
+    margin-bottom: 10px;
+}
+
+.form-wrap-right {
+    flex: 0 0 50%;
+    padding: 15px 30px;
+}
+
+.form-right-in {
+    max-width: 458px;
+    margin: 0 auto;
+}
+
+.form-right-in .btn {
+    width: 100%;
+}
+
+.form-right-in h2 {
+    color: #222533;
+    margin-bottom: 40px;
+}
+
+
+/* header */
+
+header {
+    background: #222533;
+    padding: 10px 0;
+}
+
+header .brand {
+    float: left;
+    width: 209px;
+    text-align: center;
+}
+
+header .header-right {
+    margin-left: 210px;
+    padding-left: 30px;
+}
+
+header .togglebtn {
+    margin-top: 18px;
+    display: none;
+}

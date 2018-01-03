@@ -1,0 +1,480 @@
+<div class="midbody clearfix">
+    <div class="radio userselection" *ngIf="IsSTIDisplay">
+        <!-- <h6>Type of User</h6> -->
+        <div class="radio-box">
+            <input type="radio" id="newUser" name="type" (click)="setFormDisplayType('New')" [(ngModel)]="setvalueOfUsertype" [value]="USER_REGISTRATION_TYPE.NEW"
+            />
+            <label for="newUser">New User</label>
+        </div>
+        <div class="radio-box">
+            <input type="radio" name="type" id="existingUser" (click)="setFormDisplayType('Existing')" [(ngModel)]="setvalueOfUsertype"
+                [value]="USER_REGISTRATION_TYPE.ALREADYEXIST" />
+            <label for="existingUser">Existing User</label>
+        </div>
+    </div>
+    <form [formGroup]="stiForm" novalidate class="horizontal-form" (ngSubmit)="savestiform(stiForm.value, stiForm.valid); onSubmit();"
+        *ngIf="IsSTIDisplay">
+        <div class="row" *ngIf="IsStiformDisplay">
+            <div class="col-md-6">
+
+
+                <div class="form-group">
+                    <label class="form-label">First Name<span style="color:red;"><strong>*</strong></span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                        <input type="text" formControlName="Firstname" (keypress)="a($event)" class="form-control" placeholder="Chee Kin">
+                    </div>
+                    <STIcontrol-messages [control]="stiForm.controls.Firstname"></STIcontrol-messages>
+                </div>
+
+
+                <!-- <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['Firstname'].valid && stiForm.controls['Firstname'].touched}">
+                        <label><strong>First Name <span style="color:red;">*</span></strong></label>
+                        <div class="input-group">
+                          
+                          <input class="form-control" minlength="4" maxlength="20" type="text" (keypress)="a($event)" placeholder="Enter First Name" [formControl]="stiForm.controls['Firstname']">
+                          
+                        </div>
+                        <div *ngIf="stiForm.controls['Firstname'].touched || stiForm.controls['Firstname'].dirty">
+                          <div *ngIf="stiForm.controls['Firstname'].hasError('required')"  class="fName"  > First Name is Required</div>
+                          <div *ngIf="stiForm.controls['Firstname'].hasError('minlength')" class="fName"> Min Length is 4 </div>
+                          <div *ngIf="stiForm.controls['Firstname'].hasError('maxlength')" class="fName"> Max Length is 20 </div>
+                        </div>
+                      </div> -->
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Last Name<span style="color:red;"><strong>*</strong></span></label>
+                    <input type="text" formControlName="LastName" (keypress)="a($event)" class="form-control" placeholder="Lim">
+                    <STIcontrol-messages [control]="stiForm.controls.LastName"></STIcontrol-messages>
+                </div>
+
+                <!-- <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['LastName'].valid && stiForm.controls['LastName'].touched}">
+                        <label><strong>Last Name <span style="color:red;">*</span></strong></label>
+                        <div class="input-group">
+                          
+                          <input class="form-control" minlength="4" maxlength="20" type="text" (keypress)="a($event)" placeholder="Enter First Name" [formControl]="stiForm.controls['LastName']">
+                          
+                        </div>
+                        <div *ngIf="stiForm.controls['LastName'].touched || stiForm.controls['LastName'].dirty">
+                          <div *ngIf="stiForm.controls['LastName'].hasError('required')" class="lName"> Last Name is Required</div>
+                          <div *ngIf="stiForm.controls['LastName'].hasError('minlength')" class="lName"> Min Length is 4 </div>
+                          <div *ngIf="stiForm.controls['LastName'].hasError('maxlength')" class="lName"> Max Length is 20 </div>
+                        </div>
+                      </div> -->
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="IsStiformDisplay">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Phone Number<span style="color:red;"><strong>*</strong></span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-phone-square"></i></div>
+                        <input type="text" class="form-control" formControlName="PhoneNumber" placeholder="+61 (123) 456-7890" [textMask]="{mask: mask}"
+                            (keypress)="restrictNumeric($event)">
+                    </div>
+                    <STIcontrol-messages [control]="stiForm.controls.PhoneNumber"></STIcontrol-messages>
+                </div>
+
+                <!-- <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['PhoneNumber'].valid && stiForm.controls['PhoneNumber'].touched}">
+                        <label><strong>Phone Number <span style="color:red;">*</span></strong></label>
+                        <div class="input-group">
+                          
+                          <input class="form-control" type="text" (keypress)="restrictNumeric($event)" placeholder="Enter Phone Number" [formControl]="stiForm.controls['PhoneNumber']">
+                          
+                        </div>
+                        <div *ngIf="stiForm.controls['PhoneNumber'].touched || stiForm.controls['PhoneNumber'].dirty">
+                          <div *ngIf="stiForm.controls['PhoneNumber'].hasError('required')" class="phonenumber"> PhoneNumber is Required</div>
+                         
+                        </div>
+                      </div>
+             -->
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['EmailAddress'].valid && stiForm.controls['EmailAddress'].touched}">
+                    <label class="form-label">Email Address<span style="color:red;"><strong>*</strong></span></label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-envelope"></i></div>
+                        <input type="text" class="form-control" formControlName="EmailAddress" placeholder="Email" (blur)="CheckEmail(stiForm.controls.EmailAddress.value)">
+                    </div>
+                    <STIcontrol-messages [control]="stiForm.controls.EmailAddress"></STIcontrol-messages>
+                </div>
+
+                <!-- <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['EmailAddress'].valid && stiForm.controls['EmailAddress'].touched}">
+                        <label><strong>Email <span style="color:red;">*</span></strong></label>
+                        <div class="input-group">
+                          <div class="input-group-addon"> <i class="fa fa-envelope"></i></div>
+                          <input class="form-control" type="email" placeholder="Enter Email" [formControl]="stiForm.controls['EmailAddress']">
+                          <div class="input-group-addon"> <i class="fa fa-info-circle" placement="top" ngbTooltip="Must be like example@email.com" style="color: maroon"></i></div>
+                        </div>
+                        <div *ngIf="stiForm.controls['EmailAddress'].touched && stiForm.controls['EmailAddress'].hasError('required')" class="email">
+                          Email is Required
+                        </div>
+                      </div> -->
+
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="IsStiformDisplay">
+            <label class="form-label">Receive an SMS when my results are ready in the MediRecords app?</label>
+            <div class="radio">
+                <div class="radio-box">
+                    <input type="radio" id="recivesms_y" formControlName="IsReceiveSms" [value]="RECEIVESMS.YES" />
+                    <label for="recivesms_y">{{RECEIVESMS.YES}}</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="recivesms_n" formControlName="IsReceiveSms" [value]="RECEIVESMS.No" />
+                    <label for="recivesms_n">{{RECEIVESMS.No}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="IsStiformDisplay">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Do You Have Any Allergies?</label>
+                    <div class="radio">
+                        <div class="radio-box">
+                            <input type="radio" id="haveallery_y" formControlName="IsAllergies" [value]="ALLERGIESQUESTION.YES" />
+                            <label for="haveallery_y">{{ALLERGIESQUESTION.YES}}</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="haveallery_n" formControlName="IsAllergies" [value]="ALLERGIESQUESTION.No" />
+                            <label for="haveallery_n">{{ALLERGIESQUESTION.No}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="IsAllergyListDisplay">
+                <div class="form-group">
+                    <label class="form-label">List Your Allergies</label>
+                    <textarea class="form-control" rows="5" id="comment" formControlName="AllergiesList"></textarea>
+                    <STIcontrol-messages [control]="stiForm.controls.AllergiesList"></STIcontrol-messages>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="IsStiformDisplay">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label class="form-label">Do You Have A Medicare Card?</label>
+                    <div class="radio">
+                        <div class="radio-box">
+                            <input type="radio" id="medicare_y" [value]="MEDICARE_CARD.YES" formControlName="IsMedicareCard" />
+                            <label for="medicare_y">{{ MEDICARE_CARD.YES }}</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="medicare_n" [value]="MEDICARE_CARD.No" formControlName="IsMedicareCard" />
+                            <label for="medicare_n">{{ MEDICARE_CARD.No }} </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-6">
+                <div class="col-md-6" *ngIf="IsMedicareCardDisplay">
+                    <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['MedicareCardNumber'].valid && stiForm.controls['MedicareCardNumber'].touched}">
+                        <label class="form-label">Medicare Card Number<span style="color:red;"><strong>*</strong></span></label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-cc-amex"></i></div>
+                        <input type="text" class="form-control" (keypress)="restrictNumeric($event)" formControlName="MedicareCardNumber">
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.MedicareCardNumber"></STIcontrol-messages>
+                    </div>
+                    <!--/span-->
+                    <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['MedicareRefNumber'].valid && stiForm.controls['MedicareRefNumber'].touched}">
+                        <label class="form-label">Ref<span style="color:red;"><strong>*</strong></span></label>
+                        <input type="text" class="form-control" placeholder="Ref" formControlName="MedicareRefNumber">
+                        <STIcontrol-messages [control]="stiForm.controls.MedicareRefNumber"></STIcontrol-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="IsStiformDisplay">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Gender</label>
+                    <div class="input-group">
+                            <div class="input-group-addon"> <i class="fa fa-venus-mars"></i></div>
+                        <select class="form-control" formControlName="Gender">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Date of Birth</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="DateOfBirth" ngbDatepicker #d="ngbDatepicker">
+                        <label class="input-group-addon btn" for="testdate" (click)="d.toggle()">
+                            <span class="fa fa-calendar"></span>
+                        </label>
+                    </div>
+                    <STIcontrol-messages [control]="stiForm.controls.DateOfBirth"></STIcontrol-messages>
+                </div>
+            </div>
+        </div>
+
+        <div formGroupName="Address" *ngIf="IsStiformDisplay">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 1<span style="color:red;"><strong>*</strong></span></label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-home"></i></div>
+                            <input type="text" class="form-control" placeholder="Address Line 1" formControlName="AddressLine1">
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.Address.controls.AddressLine1"></STIcontrol-messages>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-flag-checkered"></i></div>
+                        <select class="form-control" formControlName="State">
+                            <option value="1">New South Wales</option>
+                            <option value="2">Victoria</option>
+                            <option value="3">Queensland</option>
+                            <option value="4">Western Australia</option>
+                            <option value="5">South Australia</option>
+                            <option value="6">Tasmania</option>
+                            <option value="7">Australian Capital Territory</option>
+                            <option value="8">Northern Territory</option>
+                        </select>
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.Address.controls.State"></STIcontrol-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Postcode<span style="color:red;"><strong>*</strong></span></label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-map-marker"></i></div>
+                            <input type="text" class="form-control" (keypress)="restrictNumeric($event)" placeholder="Postcode" formControlName="PostCode">
+
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.Address.controls.PostCode"></STIcontrol-messages>
+                    </div>
+                    <!-- <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['PhoneNumber'].valid && stiForm.controls['PhoneNumber'].touched}">
+                            <label><strong>Phone Number <span style="color:red;">*</span></strong></label>
+                            <div class="input-group">
+                              
+                              <input class="form-control" type="text" (keypress)="restrictNumeric($event)" placeholder="Enter First Name" [formControl]="stiForm.controls['PhoneNumber']">
+                              
+                            </div>
+                            <div *ngIf="stiForm.controls['PhoneNumber'].touched || stiForm.controls['PhoneNumber'].dirty">
+                              <div *ngIf="stiForm.controls['PhoneNumber'].hasError('required')" class="phonenumber"> PhoneNumber is Required</div>
+                             
+                            </div>
+                          </div> -->
+
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Suburb<span style="color:red;"><strong>*</strong></span></label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-building"></i></div>
+                            <input type="text" class="form-control" placeholder="Suburb" formControlName="Suburb">
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.Address.controls.Suburb"></STIcontrol-messages>
+                    </div>
+                </div>
+                <!--/span-->
+
+                <!--/span-->
+            </div>
+        </div>
+
+        <div *ngIf="!IsStiformDisplay">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" [ngClass]="{'has-error':!stiForm.controls['EmailAddressRegisterdUser'].valid && stiForm.controls['EmailAddressRegisterdUser'].touched}">
+                        <label class="form-label">Email Address<span style="color:red;"><strong>*</strong></span></label>
+                        <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-envelope"></i></div>
+                            <input type="text" class="form-control" formControlName="EmailAddressRegisterdUser" placeholder="Email">
+                        </div>
+                        <STIcontrol-messages [control]="stiForm.controls.EmailAddressRegisterdUser"></STIcontrol-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Are you a sexually active person under 29 years of age?</label>
+                <div class="radio">
+                    <div class="radio-box">
+                        <input type="radio" id="sexuallya_y" formControlName="IsSexuallyActivePerson" [value]="SEXUALL_ACTIVE_PERSON.YES">
+                        <label for="sexuallya_y">{{SEXUALL_ACTIVE_PERSON.YES}} </label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" id="sexuallya_n" formControlName="IsSexuallyActivePerson" [value]="SEXUALL_ACTIVE_PERSON.No">
+                        <label for="sexuallya_n">{{SEXUALL_ACTIVE_PERSON.No}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Are you a sexually active Aboriginal or Torres Strait Islander person under 29 years of age?</label>
+                <div class="radio">
+                    <div class="radio-box">
+
+                        <input type="radio" id="aboriginal_y" formControlName="IsSexuallyActiveAboriginal" [value]="SEXUALL_ACTIVE_PERSON_ABORIGINAL.YES">
+                        <label for="aboriginal_y">{{SEXUALL_ACTIVE_PERSON_ABORIGINAL.YES}}</label>
+                    </div>
+                    <div class="radio-box">
+
+                        <input type="radio" id="aboriginal_n" formControlName="IsSexuallyActiveAboriginal" [value]="SEXUALL_ACTIVE_PERSON_ABORIGINAL.No">
+                        <label for="aboriginal_n">{{SEXUALL_ACTIVE_PERSON_ABORIGINAL.No}}</label>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Are you an asymptomatic person (no symptoms) seeking "an STI checkup"?</label>
+                <div class="radio">
+                    <div class="radio-box">
+
+                        <input type="radio" id="asymptomaticp_y" formControlName="IsAsymptomatic" [value]="ASYMPTOMATIC_PERSON.YES" checked="">
+                        <label for="asymptomaticp_y">{{ASYMPTOMATIC_PERSON.YES}} </label>
+                    </div>
+                    <div class="radio-box">
+
+                        <input type="radio" id="asymptomaticp_n" formControlName="IsAsymptomatic" [value]="ASYMPTOMATIC_PERSON.No">
+                        <label for="asymptomaticp_n"> {{ASYMPTOMATIC_PERSON.No}}</label>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Are you a male who has, or has had sex with another male?</label>
+                <div class="radio">
+                    <div class="radio-box">
+                        <input type="radio" id="gay_y" formControlName="IsSexwithAnotherMale" [value]="IS_SEX_WITH_ANOTHER_MALE.YES" checked="">
+                        <label for="gay_y">{{IS_SEX_WITH_ANOTHER_MALE.YES}}</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" id="gay_n" formControlName="IsSexwithAnotherMale" [value]="IS_SEX_WITH_ANOTHER_MALE.No">
+                        <label for="gay_n"> {{IS_SEX_WITH_ANOTHER_MALE.No}} </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Are you, or have you been a sex worker?</label>
+                <div class="radio">
+                    <div class="radio-box">
+                        <input type="radio" id="sexworker_y" formControlName="IsSexWorker" [value]="SEX_WORKER.YES" checked="">
+                        <label for="sexworker_y">{{SEX_WORKER.YES}} </label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" id="sexworker_n" formControlName="IsSexWorker" [value]="SEX_WORKER.No">
+                        <label for="sexworker_n">{{SEX_WORKER.No}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Do you, or have you previously injected drugs?</label>
+                <div class="radio">
+                    <div class="radio-box">
+
+                        <input type="radio" id="injectdrug_y" formControlName="IsPreviouslyInjectedDrug" [value]="PREVIOUSLY_INJECTED_DRUGS.YES"
+                            checked="">
+                        <label for="injectdrug_y"> {{PREVIOUSLY_INJECTED_DRUGS.YES}}</label>
+                    </div>
+                    <div class="radio-box">
+
+                        <input type="radio" id="injectdrug_n" formControlName="IsPreviouslyInjectedDrug" [value]="PREVIOUSLY_INJECTED_DRUGS.No">
+                        <label for="injectdrug_n">{{PREVIOUSLY_INJECTED_DRUGS.No}}</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button class="btn btn-primary formbtn-lg">Submit</button>
+        </div>
+    </form>
+    <form [formGroup]="stiPaymentForm" novalidate class="horizontal-form" (ngSubmit)="getToken(stiPaymentForm.value)" *ngIf="IsPayFormDisplay">
+        <div class="form-group" [ngClass]="{'has-error':!stiPaymentForm.controls['cardNumber'].valid && stiPaymentForm.controls['cardNumber'].touched}">
+            <label class="form-label">Card Number<span style="color:red;"><strong>*</strong></span></label>
+            <div class="input-group">
+                    <div class="input-group-addon"> <i class="fa fa-credit-card-alt"></i></div>
+            <input type="text" (keypress)="onlyNumberKey($event)" maxlength="20" formControlName="cardNumber" class="form-control" placeholder="Card number">
+            </div>
+            <STIcontrol-messages [control]="stiPaymentForm.controls.cardNumber"></STIcontrol-messages>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error':!stiPaymentForm.controls['expiryMonth'].valid && stiPaymentForm.controls['expiryMonth'].touched}">
+                    <label class="form-label">Expiration (MM/YY)<span style="color:red;"><strong>*</strong></span></label>
+                    <div class="input-group">
+                            <div class="input-group-addon"> <i class="fa fa-calendar"></i></div>
+                    <input type="text" (keypress)="onlyNumberKey($event)" maxlength="2" formControlName="expiryMonth" class="form-control" placeholder="MM">
+                    </div>
+                    <STIcontrol-messages [control]="stiPaymentForm.controls.expiryMonth"></STIcontrol-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error':!stiPaymentForm.controls['expiryYear'].valid && stiPaymentForm.controls['expiryYear'].touched}">
+                    <label class="form-label" style="visibility:hidden">Last Name</label>
+                    
+                        
+                    <input type="text" (keypress)="onlyNumberKey($event)" maxlength="4" formControlName="expiryYear" class="form-control" placeholder="YY">
+                   
+                    <STIcontrol-messages [control]="stiPaymentForm.controls.expiryYear"></STIcontrol-messages>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" [ngClass]="{'has-error':!stiPaymentForm.controls['cvc'].valid && stiPaymentForm.controls['cvc'].touched}">
+                    <label class="form-label">cvc<span style="color:red;"><strong>*</strong></span></label>
+                    <input type="text" (keypress)="onlyNumberKey($event)" maxlength="4" formControlName="cvc" class="form-control" placeholder="cvc">
+                    <STIcontrol-messages [control]="stiPaymentForm.controls.cvc"></STIcontrol-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Amount To be paid</label>
+                    <div class="input-group">
+                            <div class="input-group-addon"> <i class="fa fa-usd"></i></div>
+                    <input type="text" formControlName="Amount" class="form-control" [attr.disabled]="true" placeholder="$21">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="!stiPaymentForm.valid">
+                <i class="fa fa-check"></i> Submit Payment</button>
+        </div>
+    </form>
+    <h1 *ngIf="IsThankYouVisible">Thank you!</h1>
+</div>
+<div class="loader" *ngIf="IsLoaderActive"><img src="assets/loader.gif" /></div>

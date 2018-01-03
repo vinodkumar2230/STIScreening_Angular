@@ -1,0 +1,66 @@
+    <div class="container">     
+<div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">Sign Up</div>
+                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" [routerLink]="['/login']">Sign In</a></div>
+                        </div>  
+                        <div class="panel-body" >
+                            <form id="signupform" [formGroup]="registrationform" (ngSubmit)="onSubmit(registrationform.value)" class="form-horizontal" role="form">
+                                
+                                <div id="signupalert" style="display:none" class="alert alert-danger">
+                                    <p>Error:</p>
+                                    <span></span>
+                                </div>
+                                  
+                                <div class="form-group">
+                                    <label for="email" class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" formControlName="email" placeholder="Email Address">
+                                     <app-control-messages [control]="registrationform.controls.email"></app-control-messages>
+                                    </div>
+                                    
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <label for="firstname" class="col-md-3 control-label">First Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" formControlName="firstname" placeholder="First Name">
+                                        <app-control-messages [control]="registrationform.controls.firstname"></app-control-messages>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="lastname" class="col-md-3 control-label">Last Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" formControlName="lastname" placeholder="Last Name">
+                                        <app-control-messages [control]="registrationform.controls.lastname"></app-control-messages>
+                                    </div>
+                                </div>
+                                 
+                                <div class="form-group">
+                                    <label for="password" class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                                        <app-control-messages [control]="registrationform.controls.password"></app-control-messages>
+                                    </div>
+                                </div>
+                                     
+                               
+
+                                <div class="form-group">
+                                                                
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button  type="submit"  [disabled]="registrationform.invalid" class="btn btn-info"><i class="icon-hand-right"></i>Sign Up</button>
+                                      
+                                    </div>
+                                     
+                                       
+                                </div>
+                                
+                               
+                            </form>
+                         </div>
+                    </div>
+         </div>   
+    </div>

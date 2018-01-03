@@ -1,0 +1,350 @@
+<div class="midbody clearfix">
+    <form [formGroup]="searchform" novalidate (ngSubmit)="FilterData(searchform.value)">
+        <!-- <pre>{{searchform.value | json}}</pre> -->
+        <div class="row mt-30">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">First Name</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                        <input type="text" class="form-control" placeholder="Chee Kin" formControlName="firstName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Last Name</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                        <input type="text" class="form-control" placeholder="Chee Kin" formControlName="lastName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-envelope"></i></div>
+                        <input type="text" class="form-control" placeholder="Chee Kin" formControlName="email">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">State</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"> <i class="fa fa-flag-checkered"></i></div>
+                        <select class="form-control" formControlName="state">
+                            <option value="-1">--Select State--</option>
+                            <option value="1">New South Wales</option>
+                            <option value="2">Victoria</option>
+                            <option value="3">Queensland</option>
+                            <option value="4">Western Australia</option>
+                            <option value="5">South Australia</option>
+                            <option value="6">Tasmania</option>
+                            <option value="7">Australian Capital Territory</option>
+                            <option value="8">Northern Territory</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Start Date</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="startdp" ngbDatepicker #start="ngbDatepicker" formControlName="startDate">
+                        <label class="input-group-addon btn" for="startdate" (click)="start.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">End Date</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="enddp" ngbDatepicker #end="ngbDatepicker" formControlName="endDate">
+                        <label class="input-group-addon btn" for="enddate" (click)="end.toggle()">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label" style="visibility:hidden">End Date</label>
+                <div class="form-actions right">
+                    <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i>Search</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <p-dataTable [value]="datatabledata" [totalRecords]="tabletotal" [rows]="tablerows" [paginator]="true" [lazy]="true" (onLazyLoad)="loadLazyScreeningData($event)"
+        [rowsPerPageOptions]="[5,10,20]">
+        <p-header><strong> ALL PATIENT SCREENINGS</strong> </p-header>
+        <p-column field="Name" header="Name" sortable="true"></p-column>
+        <p-column field="Email" header="Email" sortable="true"></p-column>
+        <p-column field="DateOfBirth" header="DOB" sortable="true"></p-column>
+        <p-column field="StateName" header="State" sortable="true"></p-column>
+        <p-column field="CreatedDate" header="Created Date" sortable="true"></p-column>
+        <p-column field="IsReceiveSMS" header="Status"></p-column>
+        <p-column field="UserID" header="">
+            <ng-template let-col let-row="rowData" let-index="rowIndex" pTemplate="body">
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn btn-primary">Action</button>
+                    <button type="button" dropdownToggle class="btn btn-primary dropdown-toggle dropdown-toggle-split">
+                   <span class="caret"></span>
+                   <span class="sr-only">Split Button!</span>
+               </button>
+                    <ul *dropdownMenu class="dropdown-menu " role="menu">
+                        <li role="menuitem">
+                            <a class="dropdown-item" (click)="openPatientView(row.UserID)" style="cursor: pointer">Patient Detail</a>
+                        </li>
+                        <li role="menuitem">
+                            <a class="dropdown-item" (click)="openUploadReportModalPopup(row.UserID,row.ScreeningID)" style="cursor:pointer">Upload Report</a>
+
+                        </li>
+                        <li role="menuitem">
+                            <a class="dropdown-item" (click)="ViewSTIForm(row.ScreeningID)" style="cursor:pointer">View STI</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <!-- <span *ngIf="!row.isEditable">{{row.EstimatedTime}}</span>
+               <span *ngIf="row.isEditable"><input type="text" [(ngModel)]="row.EstimatedTime"></span> -->
+            </ng-template>
+        </p-column>
+        <p-footer *ngIf="tabletotal">
+            <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label> <strong>Total Records:</strong></label> {{tabletotal }}
+            </div>
+        </p-footer>
+    </p-dataTable>
+</div>
+<div class="loader" *ngIf="IsLoaderActive">
+    <img src="assets/loader.gif" />
+</div>
+
+<div *ngIf="isSTIModalShown" [config]="{ show: true}" (onHidden)="onHidden()" bsModal #autoShownaSTIModal="bs-modal" class="modal fade"
+    tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">STI Detail</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Are you a sexually active person under 29 years of age?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsSexuallyActivePerson}}</strong>
+                    </label>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Are you a sexually active Aboriginal or Torres Strait Islander person under 29 years of age?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsSexuallyActiveAboriginal}}</strong>
+                    </label>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Are you an asymptomatic person (no symptoms) seeking "an STI checkup"?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsAsymptomatic}}</strong>
+                    </label>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Are you a male who has, or has had sex with another male?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsSexwithAnotherMale}}</strong>
+                    </label>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Are you, or have you been a sex worker?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsSexWorker}}</strong>
+                    </label>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Do you, or have you previously injected drugs?</label>
+                    <p class="heading">
+                        <label>
+                        <strong>{{singleScreeningViewModel.IsPreviouslyInjectedDrug}}</strong>
+                    </label>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isPatientDetailShown" [config]="{ show: true}" (onHidden)="onPatientModelHidden()" bsModal #autoShownPatientDetailModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Patient Detail</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hidePatientDetailModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                                <input type="text" class="form-control" [ngModel]="patientDetailParamVM.FirstName" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                                <input type="text" class="form-control" [ngModel]="patientDetailParamVM.LastName" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.phone" disabled />
+                        </div>
+                    </div> -->
+                <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.Email" disabled />
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            <div class="input-group">
+                                    <div class="input-group-addon"> <i class="fa fa-calendar"></i></div>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.DateOfBirth" disabled />
+                        </div></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group radio">
+                            <label class="form-label">Sex</label>
+                            <div class="radio-box ">
+                                <input type="radio" id="male" [value]="'Male'" [(ngModel)]="patientDetailParamVM.Gender" disabled />
+                                <label for="male">Male</label>
+                            </div>
+                            <div class="radio-box">
+                                <input type="radio" id="female" [value]="'Female'" [(ngModel)]="patientDetailParamVM.Gender" disabled />
+                                <label for="female">Female</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Address 1</label>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.AddressLine1" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">State</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-flag-checkered"></i></div>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.State" value="Suburb" disabled />
+                            <!-- <select class="form-control" disabled>
+                                <option>NY</option>
+                            </select> -->
+                        </div></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Suburb</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-building"></i></div>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.Suburb" disabled />
+                        </div></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Postcode</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-map-marker"></i></div>
+                            <input type="text" class="form-control" [ngModel]="patientDetailParamVM.PostCode" disabled />
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngIf="isUploadReporModalShown" [config]="{ show: true}" (onHidden)="onReportModelHidden()" bsModal #autoShownUploadReportModal="bs-modal"
+    class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Upload Report</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideReportModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form #uploadForm="ngForm" (ngSubmit)="onReportSubmit()">
+                    <div class="form-group">
+                        <input type="file" [(ngModel)]="reportFile" name="reportFile" #reportupload class="filestyle" data-icon="false" (change)="fileChange(reportupload.files)"
+                            required>
+                    </div>
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary formbtn-lg" [disabled]="!IsFileSelected">Submit</button>
+                    </div>
+                </form>
+                <div *ngIf="filesList.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>FileName</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let filedetail of filesList;let i= index">
+                                <td>{{i + 1}}</td>
+                                <td>{{filedetail.FileName}}</td>
+                                <td><a (click)="DownloadScreeningFile(filedetail.FileID,filedetail.FileName)" style="cursor: pointer"><i class="fa fa-download"></i></a></td>
+                                <td><a (click)="DeleteSelectedFile(filedetail.FileID,filedetail.FileName)" style="cursor: pointer"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> -->

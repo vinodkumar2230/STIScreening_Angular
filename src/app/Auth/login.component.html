@@ -1,0 +1,50 @@
+<div class="wrapper">
+    <div class="form-wrap">
+        <div class="form-wrap-left">
+            <div class="form-left-content">
+                <figure>
+                    <img src="assets/logo.jpg" alt="" />
+                </figure>
+                <div class="form-left-text">
+                    We are a team of medical professionals with years of experience.
+                </div>
+            </div>
+        </div>
+        <div class="form-wrap-right">
+            <div class="form-right-in">
+                <h2>Login </h2>
+                <form [formGroup]="loginform" (ngSubmit)="onSubmit(loginform.value)" role="form">
+                    <div class="form-box">
+                        <div class="form-group">
+                            <label class="form-label">Email </label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-user"></i></div>
+                                <input type="text" class="form-control" formControlName="username" />
+                            </div>
+                            <app-control-messages [control]="loginform.controls.username"></app-control-messages>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password </label>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <i class="fa fa-key"></i></div>
+                                <input type="password" class="form-control" formControlName="password" />
+                            </div>
+                            <app-control-messages [control]="loginform.controls.password"></app-control-messages>
+                        </div>
+                        <!-- <div class="form-group checkbox">
+                            <input type="checkbox" id="rememberme" />
+                            <label for="rememberme">Remeber Me</label>
+                        </div> -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" [disabled]="loginform.invalid">Login</button>
+                            <!-- <button class="btn btn-primary">Login</button> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="loader" *ngIf="IsloaderActive"><img src="assets/loader.gif" /></div>
